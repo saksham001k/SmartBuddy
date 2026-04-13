@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartBuddy - Class Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 SmartBuddy</h1>
+            <p id="liveDateTime"></p>
+        </header>
+
+        <!-- CURRENT CLASS CARD (Auto-Detect) -->
+        <section class="current-class-card">
+            <h2>📍 Right Now</h2>
+            <div id="currentClassDisplay">
+                <p>Loading schedule...</p>
+            </div>
+        </section>
+
+        <!-- WEEKLY TIMETABLE VIEW -->
+        <section class="timetable-section">
+            <div class="section-header">
+                <h2>📅 Weekly Timetable</h2>
+                <button id="addClassBtn" class="btn-primary">+ Add Class</button>
+            </div>
+            <div id="timetableContainer">
+                <!-- Timetable will be rendered here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- MODAL FOR ADD/EDIT CLASS (Hidden by default) -->
+        <div id="classModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3 id="modalTitle">Add New Class</h3>
+                <form id="classForm">
+                    <input type="hidden" id="classId">
+                    <label>Day:</label>
+                    <select id="classDay" required>
+                        <option value="Monday">Monday</option><option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option><option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option><option value="Saturday">Saturday</option>
+                    </select>
+                    <label>Start Time:</label>
+                    <input type="time" id="startTime" required>
+                    <label>End Time:</label>
+                    <input type="time" id="endTime" required>
+                    <label>Subject:</label>
+                    <input type="text" id="subject" placeholder="e.g., Software Engg" required>
+                    <label>Room No.:</label>
+                    <input type="text" id="room" placeholder="e.g., LH-12" required>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-success">Save</button>
+                        <button type="button" class="btn-secondary" id="cancelModalBtn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
