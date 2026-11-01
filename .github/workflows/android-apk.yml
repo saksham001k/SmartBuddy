@@ -1,0 +1,42 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [codex/offline-timetable-pdf]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Install dependencies
+        run: npm ci
+      - name: Test timetable logic
+        run: npm test
+      - name: Bundle offline app
+        run: npm run build && npx cap sync android
+      - name: Install Android SDK components
+        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
+      - name: Build installable test APK
+        working-directory: android
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - name: Name APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk SmartBuddy.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SmartBuddy-Android-APK
+          path: SmartBuddy.apk
+          retention-days: 30
