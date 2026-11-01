@@ -28,6 +28,7 @@ jobs:
         run: npm test
       - name: Bundle offline app
         run: npm run build && npx cap sync android
+      - uses: android-actions/setup-android@v3
       - name: Install Android SDK components
         run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
       - name: Build installable test APK
