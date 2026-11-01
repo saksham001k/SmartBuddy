@@ -6,8 +6,8 @@ const DAY_SHORT = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
 // is treated only as data and never as instructions, HTML, or executable code.
 export async function readTimetablePDF(file, year) {
   if(file.size>15*1024*1024)throw new Error('Choose a PDF smaller than 15 MB.');
-  const pdfjs=await import('pdfjs-dist');
-  const {default:worker}=await import('pdfjs-dist/build/pdf.worker.min.mjs?url');
+  const pdfjs=await import('pdfjs-dist/legacy/build/pdf.mjs');
+  const {default:worker}=await import('pdfjs-dist/legacy/build/pdf.worker.min.mjs?url');
   pdfjs.GlobalWorkerOptions.workerSrc=worker;
   const loading=pdfjs.getDocument({data:await file.arrayBuffer(),isEvalSupported:false});
   const doc=await loading.promise;
