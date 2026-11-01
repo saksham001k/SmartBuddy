@@ -1,74 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartBuddy - Class Assistant</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>📚 SmartBuddy</h1>
-            <p id="liveDateTime"></p>
-        </header>
-
-        <!-- CURRENT CLASS CARD (Auto-Detect) -->
-        <section class="current-class-card">
-            <h2>📍 Right Now</h2>
-            <div id="currentClassDisplay">
-                <p>Loading schedule...</p>
-            </div>
-        </section>
-
-        <!-- WEEKLY TIMETABLE VIEW -->
-        <section class="timetable-section">
-            <div class="section-header">
-                <h2>📅 Weekly Timetable</h2>
-                <div style="display: flex; gap: 10px;">
-                    <button id="uploadBtn" class="btn-primary" style="background: #6c757d;">📤 Upload CSV</button>
-                    <button id="addClassBtn" class="btn-primary">+ Add Class</button>
-                </div>
-            </div>
-            <div id="timetableContainer">
-                <!-- Timetable will be rendered here by JavaScript -->
-            </div>
-        </section>
-
-        <!-- Hidden file input for CSV upload -->
-        <input type="file" id="csvFileInput" accept=".csv,text/csv" style="display: none;">
-        <button id="resetDemoBtn" class="btn-primary" style="background: #dc3545;">🔄 Reset Demo</button>
-        
-        <!-- MODAL FOR ADD/EDIT CLASS (Hidden by default) -->
-        <div id="classModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h3 id="modalTitle">Add New Class</h3>
-                <form id="classForm">
-                    <input type="hidden" id="classId">
-                    <label>Day:</label>
-                    <select id="classDay" required>
-                        <option value="Monday">Monday</option><option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option><option value="Thursday">Thursday</option>
-                        <option value="Friday">Friday</option><option value="Saturday">Saturday</option>
-                        <option value="Sunday">Sunday</option>
-                    </select>
-                    <label>Start Time:</label>
-                    <input type="time" id="startTime" required>
-                    <label>End Time:</label>
-                    <input type="time" id="endTime" required>
-                    <label>Subject:</label>
-                    <input type="text" id="subject" placeholder="e.g., Software Engg" required>
-                    <label>Room No.:</label>
-                    <input type="text" id="room" placeholder="e.g., LH-12" required>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-success">Save</button>
-                        <button type="button" class="btn-secondary" id="cancelModalBtn">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#174b42"><title>SmartBuddy • Your timetable</title><link rel="stylesheet" href="/style.css"></head>
+<body><main>
+<header><div class="brand">sb <span>SmartBuddy</span></div><span class="offline">● Offline ready</span></header>
+<section class="intro"><p class="eyebrow" id="today"></p><h1>A little more ready.<br>For every class.</h1><p>Your timetable, your campus, your day. All on your device.</p></section>
+<section class="next-card"><p class="eyebrow">YOUR NEXT STEP</p><div id="currentClassDisplay"></div></section>
+<section class="reminders"><div><strong>Five minutes ahead</strong><p id="reminderStatus" role="status">Checking reminders…</p></div><button id="enableReminders" class="secondary">Enable reminders</button></section>
+<section class="schedule"><div class="section-header"><div><p class="eyebrow">MAKE ROOM FOR YOUR DAY</p><h2>Your timetable</h2></div><button id="addClassBtn">+ Add class</button></div><div class="pdf-upload"><div><strong>New week? Drop in your timetable.</strong><p>Read your calendar PDF offline. Review once, then update your classes and reminders.</p></div><button id="pdfBtn" class="secondary">Upload PDF</button></div>
+<div class="toolbar"><label>View <select id="view"><option value="today">Today</option><option value="week">Week</option><option value="all">All classes</option></select></label><div><button id="uploadBtn" class="text-button">Import CSV</button><button id="exportBtn" class="text-button">Back up</button></div></div><div id="weekControls" hidden><button id="previousWeek" class="text-button" aria-label="Previous week">←</button><span id="weekRange"></span><button id="nextWeek" class="text-button" aria-label="Next week">→</button></div><div id="timetableContainer"></div></section>
+<p id="message" role="status" class="message"></p><footer>Made for the days that move fast. <span>No account. No connection needed.</span></footer>
+</main><input type="file" id="csvFileInput" accept=".csv,text/csv" hidden>
+<dialog id="classModal"><form id="classForm"><div class="section-header"><h2 id="modalTitle">Add class</h2><button type="button" id="cancelModalBtn" class="text-button" aria-label="Close">✕</button></div>
+<input type="hidden" id="classId"><label>Class name<input id="subject" maxlength="100" placeholder="e.g. Mathematics" required></label><label>Venue<input id="room" maxlength="120" placeholder="e.g. Room 204, Science block" required></label><label>Course code (optional)<input id="courseCode" maxlength="60"></label><label>Faculty (optional)<input id="faculty" maxlength="120"></label><label>Online link (optional)<input id="classLink" type="url" placeholder="https://…"></label>
+<label>Repeats<select id="repeat"><option value="weekly">Every week</option><option value="once">On a specific date</option></select></label>
+<label id="dayLabel">Day<select id="classDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></label>
+<label id="dateLabel" hidden>Date<input type="date" id="classDate"></label><div class="time-fields"><label>Starts<input type="time" id="startTime" required></label><label>Ends<input type="time" id="endTime" required></label></div><p class="hint">A reminder is scheduled 5 minutes before the start.</p><button type="submit" class="save">Save class</button></form></dialog>
+<input type="file" id="pdfFileInput" accept="application/pdf,.pdf" hidden>
+<dialog id="importModal"><form id="importForm"><div class="section-header"><h2>Review your timetable</h2><button type="button" id="cancelImport" class="text-button" aria-label="Close PDF preview">✕</button></div><p class="hint" id="importSummary"></p><p class="hint">Dates come from the PDF. Start times follow the grid; end times are estimated from block heights. Check them below. Cut-off names stay as printed.</p><label>Update mode<select id="importMode"><option value="replace">Replace dated classes in this PDF’s date range</option><option value="merge">Add classes, keeping existing classes</option></select></label><p class="hint">Weekly repeating classes are kept. Imported classes apply only to the dates shown.</p><div id="importRows"></div><button class="save" type="submit">Update timetable & reminders</button></form></dialog>
+<script type="module" src="/script.js"></script></body></html>
